@@ -47,6 +47,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:28.1.4"],\
             ["@types/node", "npm:16.11.60"],\
             ["@types/passport-jwt", "npm:3.0.6"],\
+            ["@types/passport-local", "npm:1.0.34"],\
             ["@types/supertest", "npm:2.0.12"],\
             ["@typescript-eslint/eslint-plugin", "virtual:bc23f572b92431ed6ef94486856d03907fd48fe0b751ed300c258f0ab6dd4b1bb7fda166f3252ffa93c367826d2c297b78ec66a568a345ad794a798a66ef0da4#npm:5.38.0"],\
             ["@typescript-eslint/parser", "virtual:bc23f572b92431ed6ef94486856d03907fd48fe0b751ed300c258f0ab6dd4b1bb7fda166f3252ffa93c367826d2c297b78ec66a568a345ad794a798a66ef0da4#npm:5.38.0"],\
@@ -60,6 +61,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mysql2", "npm:2.3.3"],\
             ["passport", "npm:0.6.0"],\
             ["passport-jwt", "npm:4.0.0"],\
+            ["passport-local", "npm:1.0.0"],\
             ["prettier", "npm:2.7.1"],\
             ["reflect-metadata", "npm:0.1.13"],\
             ["rimraf", "npm:3.0.2"],\
@@ -2144,6 +2146,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/passport-jwt", "npm:3.0.6"],\
             ["@types/express", "npm:4.17.14"],\
             ["@types/jsonwebtoken", "npm:8.5.9"],\
+            ["@types/passport-strategy", "npm:0.2.35"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/passport-local", [\
+        ["npm:1.0.34", {\
+          "packageLocation": "./.yarn/cache/@types-passport-local-npm-1.0.34-aa148e4b93-c8e162f571.zip/node_modules/@types/passport-local/",\
+          "packageDependencies": [\
+            ["@types/passport-local", "npm:1.0.34"],\
+            ["@types/express", "npm:4.17.14"],\
+            ["@types/passport", "npm:1.0.11"],\
             ["@types/passport-strategy", "npm:0.2.35"]\
           ],\
           "linkType": "HARD"\
@@ -7298,6 +7312,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["passport-local", [\
+        ["npm:1.0.0", {\
+          "packageLocation": "./.yarn/cache/passport-local-npm-1.0.0-ed89961a0c-86dc08b12f.zip/node_modules/passport-local/",\
+          "packageDependencies": [\
+            ["passport-local", "npm:1.0.0"],\
+            ["passport-strategy", "npm:1.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["passport-strategy", [\
         ["npm:1.0.0", {\
           "packageLocation": "./.yarn/cache/passport-strategy-npm-1.0.0-5648a82a66-5086693f25.zip/node_modules/passport-strategy/",\
@@ -7433,6 +7457,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:28.1.4"],\
             ["@types/node", "npm:16.11.60"],\
             ["@types/passport-jwt", "npm:3.0.6"],\
+            ["@types/passport-local", "npm:1.0.34"],\
             ["@types/supertest", "npm:2.0.12"],\
             ["@typescript-eslint/eslint-plugin", "virtual:bc23f572b92431ed6ef94486856d03907fd48fe0b751ed300c258f0ab6dd4b1bb7fda166f3252ffa93c367826d2c297b78ec66a568a345ad794a798a66ef0da4#npm:5.38.0"],\
             ["@typescript-eslint/parser", "virtual:bc23f572b92431ed6ef94486856d03907fd48fe0b751ed300c258f0ab6dd4b1bb7fda166f3252ffa93c367826d2c297b78ec66a568a345ad794a798a66ef0da4#npm:5.38.0"],\
@@ -7446,6 +7471,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mysql2", "npm:2.3.3"],\
             ["passport", "npm:0.6.0"],\
             ["passport-jwt", "npm:4.0.0"],\
+            ["passport-local", "npm:1.0.0"],\
             ["prettier", "npm:2.7.1"],\
             ["reflect-metadata", "npm:0.1.13"],\
             ["rimraf", "npm:3.0.2"],\
