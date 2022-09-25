@@ -8,13 +8,13 @@ export class AuthController {
 
   @HttpCode(HttpStatus.CREATED)
   @Post('signup')
-  signup(@Body() signupDto: SignupDto) {
+  signup(@Body() signupDto: SignupDto): Promise<{ token: string }> {
     return this.authService.signup(signupDto)
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  login(@Body() loginDto: LoginDto) {
+  login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
     return this.authService.login(loginDto)
   }
 }
