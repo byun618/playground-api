@@ -12,7 +12,7 @@ export class UserController {
 
   @Get('me')
   getMe(@GetUser() user: User) {
-    return user
+    return { me: user }
   }
 
   @Patch('me')
