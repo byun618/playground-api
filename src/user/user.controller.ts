@@ -1,26 +1,22 @@
-import { Controller, Get, UseGuards } from '@nestjs/common'
-import { User } from '@prisma/client'
-import { GetUser } from '../auth/decorator'
-import { JwtGuard } from '../auth/guard'
-import { KisService } from '../kis/kis.service'
+import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common'
+import { GetUser } from '../auth/decorator/get-user.decorator'
+import { JwtGuard } from '../auth/guard/jwt.guard'
+import { User } from '../database/entity'
+import { EditMeDto } from './dto'
 import { UserService } from './user.service'
 
 @Controller('users')
+@UseGuards(JwtGuard)
 export class UserController {
-  constructor(
-    private userService: UserService,
-    private kisService: KisService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
-  @UseGuards(JwtGuard)
   @Get('me')
   getMe(@GetUser() user: User) {
     return { me: user }
   }
 
-  @Get('test')
-  test() {
-    // return this.kisService.getCurrentPrice()
-    return this.kisService.getDailyPrice()
+  @Patch('me')
+  editMe(@GetUser('id') userId: number, @Body() editMeDto: EditMeDto) {
+    return this.userService.editMe(userId, editMeDto)
   }
 }

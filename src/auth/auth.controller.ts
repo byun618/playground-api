@@ -4,16 +4,17 @@ import { LoginDto, SignupDto } from './dto'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
+  @HttpCode(HttpStatus.CREATED)
   @Post('signup')
-  signup(@Body() dto: SignupDto) {
-    return this.authService.signup(dto)
+  signup(@Body() signupDto: SignupDto): Promise<{ token: string }> {
+    return this.authService.signup(signupDto)
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  login(@Body() dto: LoginDto) {
-    return this.authService.login(dto)
+  login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
+    return this.authService.login(loginDto)
   }
 }

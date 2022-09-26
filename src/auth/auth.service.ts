@@ -1,73 +1,44 @@
-import { ForbiddenException, Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
-import * as argon from 'argon2'
-import { PrismaService } from '../prisma/prisma.service'
+import * as bcrypt from 'bcryptjs'
+import { UserRepository } from '../database/repository'
 import { LoginDto, SignupDto } from './dto'
 
 @Injectable()
 export class AuthService {
   constructor(
-    private prisma: PrismaService,
-    private jwt: JwtService,
-    private config: ConfigService,
+    private readonly userRepository: UserRepository,
+    private readonly jwtService: JwtService,
   ) {}
 
-  async signup(dto: SignupDto) {
-    try {
-      const password = await argon.hash(dto.password)
+  async signup(signupDto: SignupDto): Promise<{ token: string }> {
+    const { id: userId } = await this.userRepository.createUser(signupDto)
 
-      const user = await this.prisma.user.create({
-        data: {
-          ...dto,
-          password,
-        },
-      })
-
-      return this.signToken(user.id, user.email)
-    } catch (err) {
-      if (err instanceof PrismaClientKnownRequestError) {
-        if (err.code === 'P2002') {
-          throw new ForbiddenException('Email already taken')
-        }
-      }
-
-      throw err
-    }
+    return this.signToken(userId)
   }
 
-  async login(dto: LoginDto) {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email: dto.email,
-      },
-    })
-
-    if (!user) {
-      throw new ForbiddenException('Invalid credentials')
-    }
-
-    const isMatchedPassword = await argon.verify(user.password, dto.password)
-
-    if (!isMatchedPassword) {
-      throw new ForbiddenException('Invalid credentials')
-    }
-
-    return this.signToken(user.id, user.email)
-  }
-
-  async signToken(userId: number, email: string) {
-    const token = await this.jwt.signAsync(
-      { userId, email },
-      {
-        expiresIn: '168h',
-        secret: this.config.get('JWT_SECRET'),
-      },
+  async login(loginDto: LoginDto): Promise<{ token: string }> {
+    const { id: userId, password } = await this.userRepository.findUserByEmail(
+      loginDto.email,
     )
 
-    return {
-      access_token: token,
+    const isMatchedPassword = await bcrypt.compare(loginDto.password, password)
+
+    if (!isMatchedPassword) {
+      throw new UnauthorizedException('login failed')
     }
+
+    return this.signToken(userId)
+  }
+
+  async signToken(userId: number): Promise<{ token: string }> {
+    const token = await this.jwtService.signAsync(
+      { userId },
+      {
+        secret: process.env.SECRET,
+        expiresIn: '168h',
+      },
+    )
+    return { token }
   }
 }

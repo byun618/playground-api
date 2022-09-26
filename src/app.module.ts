@@ -1,11 +1,26 @@
 import { Module } from '@nestjs/common'
-import { AuthModule } from './auth/auth.module'
 import { ConfigModule } from '@nestjs/config'
-import { PrismaModule } from './prisma/prisma.module'
-import { UserModule } from './user/user.module';
-import { KisModule } from './kis/kis.module';
+import { AuthModule } from './auth/auth.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { DatabaseModule } from './database/database.module'
+import { UserModule } from './user/user.module'
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, AuthModule, UserModule, KisModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env.local'] }),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
+    AuthModule,
+    DatabaseModule,
+    UserModule,
+  ],
 })
 export class AppModule {}
