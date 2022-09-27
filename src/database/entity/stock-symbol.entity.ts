@@ -3,31 +3,24 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm'
 
-@Entity('users')
-export class User {
+@Entity('stockSymbols')
+@Unique(['key', 'exchangeCode'])
+export class StockSymbol {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({
-    unique: true,
-  })
-  email: string
+  @Column()
+  key: string
 
   @Column()
-  password: string
+  name: string
 
-  @Column({
-    nullable: true,
-  })
-  name?: string
-
-  @Column({
-    nullable: true,
-  })
-  phone?: string
+  @Column()
+  exchangeCode: string
 
   @CreateDateColumn()
   createdAt: Date

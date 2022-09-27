@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { DatabaseModule } from './database/database.module'
 import { UserModule } from './user/user.module'
 import { KisModule } from './kis/kis.module'
+import { StockSymbol, User } from './database/entity'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { KisModule } from './kis/kis.module'
       database: process.env.DB_DATABASE,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
+      timezone: 'local',
     }),
     AuthModule,
     DatabaseModule,

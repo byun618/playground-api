@@ -7,13 +7,13 @@ import { EditMeDto } from './dto'
 import { UserService } from './user.service'
 
 @Controller('users')
-@UseGuards(JwtGuard)
 export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly kisService: KisService,
   ) {}
 
+  @UseGuards(JwtGuard)
   @Get('me')
   getMe(@GetUser() user: User) {
     return { me: user }
@@ -22,8 +22,10 @@ export class UserController {
   @Get('test')
   async test() {
     return this.kisService.getDailyPrice('TSLA', '20220927', 2)
+    // return this.kisService.getCurrentPrice('asd')
   }
 
+  @UseGuards(JwtGuard)
   @Patch('me')
   editMe(@GetUser('id') userId: number, @Body() editMeDto: EditMeDto) {
     return this.userService.editMe(userId, editMeDto)
