@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { AuthModule } from './auth/auth.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { AuthModule } from './auth/auth.module'
 import { DatabaseModule } from './database/database.module'
-import { UserModule } from './user/user.module'
 import { KisModule } from './kis/kis.module'
-import { StockSymbol, User } from './database/entity'
+import { UserModule } from './user/user.module'
 
 @Module({
   imports: [

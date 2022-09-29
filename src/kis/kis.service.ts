@@ -81,18 +81,15 @@ export class KisService {
 
   private async setToken() {
     try {
-      // const {
-      //   data: { access_token },
-      // } = await this.httpService.axiosRef.post('/oauth2/tokenP', {
-      //   grant_type: 'client_credentials',
-      //   appkey: this.kisAppKey,
-      //   appsecret: this.kisAppSecret,
-      // })
+      const {
+        data: { access_token },
+      } = await this.httpService.axiosRef.post('/oauth2/tokenP', {
+        grant_type: 'client_credentials',
+        appkey: this.kisAppKey,
+        appsecret: this.kisAppSecret,
+      })
 
-      // this.setAuthorizationHeader(access_token)
-      this.setAuthorizationHeader(
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6ImFkYTNkYjlmLWE1ZWMtNDRhMC1iMjM4LTFkZTEwZGE4ZjkzOSIsImlzcyI6InVub2d3IiwiZXhwIjoxNjY0Mzc5NzcxLCJpYXQiOjE2NjQyOTMzNzEsImp0aSI6IlBTUEc5NUxsS3B4Rk9obWxmUVRMdlVXTlRSZWZLTFBlZGVNOSJ9.hLU-hLdeRjkP9KqdQNNpEPcJMT4q-4FLjcZvsNBN6_aY41o9r3FU96AZ7ljhOqGZFIffEH8js8tQFs3ApXa0GA',
-      )
+      this.setAuthorizationHeader(access_token)
     } catch (err) {
       if (err.response && err.response.data) {
         throw new HttpException(

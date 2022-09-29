@@ -1,9 +1,13 @@
 import { Global, Module } from '@nestjs/common'
-import { StockSymbolRepository, UserRepository } from './repository'
+import {
+  ExchangeRepository,
+  StockRepository,
+  UserRepository,
+} from './repository'
 
 @Global()
 @Module({
-  providers: [UserRepository, StockSymbolRepository],
-  exports: [UserRepository, StockSymbolRepository],
+  providers: [UserRepository, ExchangeRepository, StockRepository],
+  exports: [UserRepository, ExchangeRepository, StockRepository],
 })
 export class DatabaseModule {}

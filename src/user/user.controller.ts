@@ -21,8 +21,7 @@ export class UserController {
 
   @Get('test')
   async test() {
-    return this.kisService.getDailyPrice('TSLA', '20220927', 2)
-    // return this.kisService.getCurrentPrice('asd')
+    return this.kisService.getCurrentPrice('TSLA')
   }
 
   @UseGuards(JwtGuard)

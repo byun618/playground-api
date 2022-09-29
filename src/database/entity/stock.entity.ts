@@ -2,25 +2,27 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm'
+import { Exchange } from './exchange.entity'
 
-@Entity('stockSymbols')
-@Unique(['key', 'exchangeCode'])
-export class StockSymbol {
+@Entity('stocks')
+@Unique(['code', 'name'])
+export class Stock {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column()
-  key: string
+  code: string
 
   @Column()
   name: string
 
-  @Column()
-  exchangeCode: string
+  @ManyToOne((type) => Exchange, (exchange) => exchange.id, { eager: false })
+  exchange: Exchange
 
   @CreateDateColumn()
   createdAt: Date

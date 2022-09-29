@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common'
 import * as moment from 'moment-timezone'
-import { StockSymbolRepository } from '../database/repository'
+import { StockRepository } from '../database/repository'
 
 @Injectable()
 export class KisHelper {
-  constructor(private readonly stockSymbolRepository: StockSymbolRepository) {}
+  constructor(private readonly stockRepository: StockRepository) {}
 
   async getCurrentPriceRequest(symbol: string) {
-    const exchangeCode =
-      await this.stockSymbolRepository.findExchangeCodeBySymbol(symbol)
+    const exchangeCode = await this.stockRepository.findExchangeCodeBySymbol(
+      symbol,
+    )
 
     return {
       url: `/uapi/overseas-price/v1/quotations/price?excd=${exchangeCode}&symb=${symbol}&auth=''`,
@@ -21,8 +22,9 @@ export class KisHelper {
   }
 
   async getDailyPriceRequest(symbol: string, date: string) {
-    const exchangeCode =
-      await this.stockSymbolRepository.findExchangeCodeBySymbol(symbol)
+    const exchangeCode = await this.stockRepository.findExchangeCodeBySymbol(
+      symbol,
+    )
 
     return {
       url: `/uapi/overseas-price/v1/quotations/dailyprice?excd=${exchangeCode}&symb=${symbol}&auth=''&gubn=0&modp=0&bymd=${date}`,
