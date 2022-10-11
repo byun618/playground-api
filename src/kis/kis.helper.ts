@@ -7,7 +7,7 @@ export class KisHelper {
   constructor(private readonly stockRepository: StockRepository) {}
 
   async getCurrentPriceRequest(symbol: string) {
-    const exchangeCode = await this.stockRepository.findExchangeCodeBySymbol(
+    const exchangeCode = await this.stockRepository.getExchangeCodeBySymbol(
       symbol,
     )
 
@@ -22,7 +22,7 @@ export class KisHelper {
   }
 
   async getDailyPriceRequest(symbol: string, date: string) {
-    const exchangeCode = await this.stockRepository.findExchangeCodeBySymbol(
+    const exchangeCode = await this.stockRepository.getExchangeCodeBySymbol(
       symbol,
     )
 

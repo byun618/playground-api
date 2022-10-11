@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module'
 import { DatabaseModule } from './database/database.module'
 import { KisModule } from './kis/kis.module'
 import { UserModule } from './user/user.module'
+import { StockModule } from './stock/stock.module'
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UserModule } from './user/user.module'
     DatabaseModule,
     UserModule,
     KisModule,
+    StockModule,
   ],
 })
 export class AppModule {}

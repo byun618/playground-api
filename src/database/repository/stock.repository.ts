@@ -12,7 +12,7 @@ export class StockRepository extends Repository<Stock> {
     )
   }
 
-  async findExchangeCodeBySymbol(symbol: string) {
+  async getExchangeCodeBySymbol(symbol: string): Promise<string> {
     const stock = await this.findOne({
       select: {
         exchange: {
@@ -26,5 +26,22 @@ export class StockRepository extends Repository<Stock> {
     })
 
     return stock.exchange.code
+  }
+
+  async getAllStocks() {
+    return this.find({
+      select: {
+        id: true,
+        code: true,
+        name: true,
+        exchange: {
+          id: true,
+          code: true,
+          countryName: true,
+          countryImageUrl: true,
+        },
+      },
+      relations: ['exchange'],
+    })
   }
 }
