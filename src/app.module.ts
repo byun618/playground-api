@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module'
 import { KisModule } from './kis/kis.module'
 import { UserModule } from './user/user.module'
 import { StockModule } from './stock/stock.module'
+import { BinanceModule } from './binance/binance.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { StockModule } from './stock/stock.module'
     UserModule,
     KisModule,
     StockModule,
+    BinanceModule,
   ],
 })
 export class AppModule {}
