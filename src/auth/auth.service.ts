@@ -18,14 +18,18 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto): Promise<{ token: string }> {
-    const { id: userId, password } = await this.userRepository.findUserByEmail(
-      loginDto.email,
-    )
+    const user = await this.userRepository.findUserByEmail(loginDto.email)
+
+    if (!user) {
+      throw new UnauthorizedException('invalid email')
+    }
+
+    const { id: userId, password } = user
 
     const isMatchedPassword = await bcrypt.compare(loginDto.password, password)
 
     if (!isMatchedPassword) {
-      throw new UnauthorizedException('login failed')
+      throw new UnauthorizedException('invalid password')
     }
 
     return this.signToken(userId)
