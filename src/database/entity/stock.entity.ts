@@ -10,7 +10,7 @@ import {
 import { Exchange } from './exchange.entity'
 
 @Entity('stocks')
-@Unique(['code', 'name'])
+@Unique('code_name_unique', ['code', 'name'])
 export class Stock {
   @PrimaryGeneratedColumn()
   id: number

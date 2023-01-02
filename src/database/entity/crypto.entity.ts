@@ -3,10 +3,12 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm'
 
 @Entity('cryptos')
+@Unique('ticker_name_unique', ['ticker', 'name'])
 export class Crypto {
   @PrimaryGeneratedColumn()
   id: number
