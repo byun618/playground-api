@@ -19,10 +19,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         email: true,
         name: true,
         phone: true,
+        cryptos: {
+          id: true,
+          ticker: true,
+          name: true,
+          imageUrl: true,
+        },
       },
       where: {
         id: userId,
       },
+      relations: ['cryptos'],
     })
 
     return user
