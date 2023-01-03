@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common'
 import { GetUser } from '../auth/decorator/get-user.decorator'
 import { JwtGuard } from '../auth/guard/jwt.guard'
 import { BinanceService } from '../binance/binance.service'
@@ -31,5 +31,17 @@ export class UserController {
   @Patch('me')
   editMe(@GetUser('id') userId: number, @Body() editMeDto: EditMeDto) {
     return this.userService.editMe(userId, editMeDto)
+  }
+
+  @UseGuards(JwtGuard)
+  @Get('me/cryptos')
+  getUserCryptos(@GetUser('id') userId: number) {
+    return this.userService.getUserCryptos(userId)
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('me/cryptos')
+  createUserCrypto(@GetUser('id') userId: number) {
+    return this.userService.createUserCrypto(userId)
   }
 }

@@ -7,7 +7,7 @@ import {
 import * as bcrypt from 'bcryptjs'
 import { DataSource, Repository, QueryFailedError } from 'typeorm'
 import { SignupDto } from '../../auth/dto'
-import { User } from '../entity'
+import { Crypto, User } from '../entity'
 
 @Injectable()
 export class UserRepository extends Repository<User> {
@@ -59,5 +59,62 @@ export class UserRepository extends Repository<User> {
     }
 
     return user
+  }
+
+  async findUserCryptos(userId: number): Promise<Crypto[]> {
+    const user = await this.findOne({
+      select: {
+        cryptos: {
+          id: true,
+          ticker: true,
+          name: true,
+          imageUrl: true,
+        },
+      },
+      where: {
+        id: userId,
+      },
+      relations: ['cryptos'],
+    })
+
+    if (!user) {
+      throw new ForbiddenException('invalid email')
+    }
+
+    return user.cryptos
+  }
+
+  async createUserCrypto({
+    userId,
+    crypto,
+  }: {
+    userId: number
+    crypto: Crypto
+  }) {
+    const user = await this.findOne({
+      select: {
+        id: true,
+      },
+      where: {
+        id: userId,
+      },
+      relations: ['cryptos'],
+    })
+
+    if (!user) {
+      throw new ForbiddenException('invalid email')
+    }
+
+    const { cryptos } = user
+
+    const isCryptoExists = cryptos.some((crypto) => crypto.id === crypto.id)
+
+    if (isCryptoExists) {
+      throw new ConflictException('crypto already exists')
+    }
+
+    user.cryptos = [...cryptos, crypto]
+
+    await this.save(user)
   }
 }

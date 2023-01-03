@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import { Crypto } from './crypto.entity'
 
 @Entity('users')
 export class User {
@@ -34,4 +37,16 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date
+
+  @ManyToMany(() => Crypto)
+  @JoinTable({
+    name: 'userCryptos',
+    joinColumn: {
+      name: 'userId',
+    },
+    inverseJoinColumn: {
+      name: 'cryptoId',
+    },
+  })
+  cryptos: Crypto[]
 }
