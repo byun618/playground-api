@@ -2,6 +2,7 @@ import { Global, Module } from '@nestjs/common'
 import {
   CryptoRepository,
   ExchangeRepository,
+  SectorRepository,
   StockRepository,
   UserRepository,
 } from './repository'
@@ -13,12 +14,14 @@ import {
     ExchangeRepository,
     StockRepository,
     CryptoRepository,
+    SectorRepository,
   ],
   exports: [
     UserRepository,
     ExchangeRepository,
     StockRepository,
     CryptoRepository,
+    SectorRepository,
   ],
 })
 export class DatabaseModule {}
