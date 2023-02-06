@@ -37,8 +37,8 @@ export class StockRepository extends Repository<Stock> {
         exchange: {
           id: true,
           code: true,
-          countryName: true,
-          countryImageUrl: true,
+          country: true,
+          imageUrl: true,
         },
       },
       relations: ['exchange'],

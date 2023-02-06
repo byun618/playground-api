@@ -4,30 +4,22 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  Unique,
   UpdateDateColumn,
 } from 'typeorm'
 import { Stock } from './stock.entity'
 
-@Entity('exchanges')
-@Unique('code_name_unique', ['code', 'name'])
-export class Exchange {
+@Entity('sectors')
+export class Sector {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column()
-  code: string
-
-  @Column()
   name: string
-
-  @Column()
-  country: string
 
   @Column({
     nullable: true,
   })
-  imageUrl?: string
+  imageUrl: string
 
   @OneToMany((type) => Stock, (Stock) => Stock.exchange, { eager: false })
   stocks: Stock[]
