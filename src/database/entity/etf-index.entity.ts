@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import { Etf } from './etf.entity'
 
 @Entity('etfIndexes')
 export class EtfIndex {
@@ -20,6 +22,9 @@ export class EtfIndex {
     nullable: true,
   })
   imageUrl: string
+
+  @OneToMany((type) => Etf, (etf) => etf.id, { eager: false })
+  etfs: Etf[]
 
   @CreateDateColumn()
   createdAt: Date

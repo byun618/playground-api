@@ -2,20 +2,23 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm'
-import { Stock } from './stock.entity'
+import { EtfIndex } from './etf-index.entity'
 
-@Entity('stockSectors')
-export class StockSector {
+@Entity('etfs')
+@Unique('code_name_unique', ['code', 'name'])
+export class Etf {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({
-    unique: true,
-  })
+  @Column()
+  code: string
+
+  @Column()
   name: string
 
   @Column({
@@ -23,8 +26,10 @@ export class StockSector {
   })
   imageUrl: string
 
-  @OneToMany((type) => Stock, (stock) => stock.id, { eager: false })
-  stocks: Stock[]
+  @ManyToOne((type) => EtfIndex, (etfIndex) => etfIndex.id, {
+    eager: false,
+  })
+  etfIndex: EtfIndex
 
   @CreateDateColumn()
   createdAt: Date
