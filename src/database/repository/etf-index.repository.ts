@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { DataSource, Repository } from 'typeorm'
-import { StockSector } from '../entity'
+import { EtfIndex } from '../entity'
 
 @Injectable()
-export class StockSectorRepository extends Repository<StockSector> {
+export class EtfIndexRepository extends Repository<EtfIndex> {
   constructor(dataSource: DataSource) {
     super(
-      StockSector,
+      EtfIndex,
       dataSource.createEntityManager(),
       dataSource.createQueryRunner(),
     )
