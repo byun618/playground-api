@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { Exchange } from './exchange.entity'
-import { Sector } from './sector.entity'
+import { StockSector } from './stock-sector.entity'
 
 @Entity('stocks')
 @Unique('code_name_unique', ['code', 'name'])
@@ -30,8 +30,10 @@ export class Stock {
   @ManyToOne((type) => Exchange, (exchange) => exchange.id, { eager: false })
   exchange: Exchange
 
-  @ManyToOne((type) => Sector, (sector) => sector.id, { eager: false })
-  sector: Sector
+  @ManyToOne((type) => StockSector, (stockSector) => stockSector.id, {
+    eager: false,
+  })
+  stockSector: StockSector
 
   @CreateDateColumn()
   createdAt: Date
