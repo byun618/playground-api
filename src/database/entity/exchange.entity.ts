@@ -29,7 +29,7 @@ export class Exchange {
   })
   imageUrl?: string
 
-  @OneToMany((type) => Stock, (Stock) => Stock.exchange, { eager: false })
+  @OneToMany((type) => Stock, (stock) => stock.exchange, { eager: false })
   stocks: Stock[]
 
   @CreateDateColumn()

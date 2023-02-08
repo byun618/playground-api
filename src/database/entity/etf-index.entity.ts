@@ -23,7 +23,7 @@ export class EtfIndex {
   })
   imageUrl: string
 
-  @OneToMany((type) => Etf, (etf) => etf.id, { eager: false })
+  @OneToMany((type) => Etf, (etf) => etf.etfIndex, { eager: false })
   etfs: Etf[]
 
   @CreateDateColumn()

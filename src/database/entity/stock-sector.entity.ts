@@ -23,7 +23,7 @@ export class StockSector {
   })
   imageUrl: string
 
-  @OneToMany((type) => Stock, (stock) => stock.id, { eager: false })
+  @OneToMany((type) => Stock, (stock) => stock.stockSector, { eager: false })
   stocks: Stock[]
 
   @CreateDateColumn()
