@@ -6,6 +6,7 @@ import { StockRepository } from '../database/repository'
 export class KisHelper {
   constructor(private readonly stockRepository: StockRepository) {}
 
+  // TODO: 국내 주식 먼저 구현 후 해외 주식 구현
   async getCurrentPriceRequest(symbol: string) {
     const exchangeCode = await this.stockRepository.getExchangeCodeBySymbol(
       symbol,
@@ -21,6 +22,7 @@ export class KisHelper {
     }
   }
 
+  // TODO: 국내 주식 먼저 구현 후 해외 주식 구현
   async getDailyPriceRequest(symbol: string, date: string) {
     const exchangeCode = await this.stockRepository.getExchangeCodeBySymbol(
       symbol,

@@ -16,6 +16,73 @@ export class KisService {
     this.setHeader('appsecret', this.kisAppSecret)
   }
 
+  async getDomesticCurrentPrice(code?: string): Promise<any> {
+    await this.setToken()
+
+    try {
+      if (!code) {
+        throw new HttpException('required code', 400)
+      }
+
+      const { data } = await this.httpService.axiosRef.get(
+        '/uapi/domestic-stock/v1/quotations/inquire-price',
+        {
+          headers: {
+            tr_id: 'FHKST01010100',
+          },
+          params: {
+            fid_cond_mrkt_div_code: 'J',
+            fid_input_iscd: code,
+          },
+        },
+      )
+
+      console.log(data.output)
+    } catch (err) {
+      if (err.response && err.response.data) {
+        throw new HttpException(err.response.data.msg1, err.response.status)
+      } else {
+        throw err
+      }
+    }
+
+    return { message: 'OK' }
+  }
+
+  async getDomesticCandle() {
+    await this.setToken()
+
+    try {
+      const { data } = await this.httpService.axiosRef.get(
+        '/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice',
+        {
+          headers: {
+            tr_id: 'FHKST03010100',
+          },
+          params: {
+            fid_cond_mrkt_div_code: 'J',
+            fid_input_iscd: '360750',
+            fid_input_date_1: '20230130',
+            fid_input_date_2: '20230130',
+            fid_period_div_code: 'W',
+            fid_org_adj_prc: '0',
+          },
+        },
+      )
+
+      console.log(data)
+    } catch (err) {
+      if (err.response && err.response.data) {
+        throw new HttpException(err.response.data.msg1, err.response.status)
+      } else {
+        throw err
+      }
+    }
+
+    return { message: 'OK' }
+  }
+
+  // TODO: 국내 주식 먼저 구현 후 해외 주식 구현
   async getCurrentPrice(symbol: string): Promise<number> {
     await this.setToken()
 
@@ -47,6 +114,7 @@ export class KisService {
     }
   }
 
+  // TODO: 국내 주식 먼저 구현 후 해외 주식 구현
   async getDailyPrice(symbol: string, date: string, count: number) {
     await this.setToken()
 
@@ -79,17 +147,23 @@ export class KisService {
     }
   }
 
+  // TODO: access_token 관리방법 필요
   private async setToken() {
     try {
-      const {
-        data: { access_token },
-      } = await this.httpService.axiosRef.post('/oauth2/tokenP', {
-        grant_type: 'client_credentials',
-        appkey: this.kisAppKey,
-        appsecret: this.kisAppSecret,
-      })
+      // const {
+      //   data: { access_token },
+      // } = await this.httpService.axiosRef.post('/oauth2/tokenP', {
+      //   grant_type: 'client_credentials',
+      //   appkey: this.kisAppKey,
+      //   appsecret: this.kisAppSecret,
+      // })
 
-      this.setAuthorizationHeader(access_token)
+      // this.setAuthorizationHeader(access_token)
+      // console.log(access_token)
+
+      this.setAuthorizationHeader(
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6IjEzMWZlYzgwLTQzNzMtNGZlZC1hMjBjLTVkZWI1ODdjODI5NCIsImlzcyI6InVub2d3IiwiZXhwIjoxNjc1OTQ4Nzk5LCJpYXQiOjE2NzU4NjIzOTksImp0aSI6IlBTUEc5NUxsS3B4Rk9obWxmUVRMdlVXTlRSZWZLTFBlZGVNOSJ9.pE83h2Aswv-waNaNeNgjQfRAnDV7_zV7kATGOpra1GsqSujzy62RUMlAlTLY5kmtqxinR5aLmDnb_gGmoyzfNw',
+      )
     } catch (err) {
       if (err.response && err.response.data) {
         throw new HttpException(

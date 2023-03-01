@@ -1,8 +1,16 @@
 import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common'
+import * as fs from 'fs'
 import { GetUser } from '../auth/decorator/get-user.decorator'
 import { JwtGuard } from '../auth/guard/jwt.guard'
 import { BinanceService } from '../binance/binance.service'
 import { User } from '../database/entity'
+import {
+  ExchangeRepository,
+  StockSectorRepository,
+  StockRepository,
+  EtfIndexRepository,
+  EtfRepository,
+} from '../database/repository'
 import { KisService } from '../kis/kis.service'
 import { EditMeDto } from './dto'
 import { UserService } from './user.service'
@@ -13,6 +21,11 @@ export class UserController {
     private readonly userService: UserService,
     private readonly kisService: KisService,
     private readonly binanceService: BinanceService,
+    private readonly stockRepository: StockRepository,
+    private readonly exchangeRepository: ExchangeRepository,
+    private readonly stockSectorRepository: StockSectorRepository,
+    private readonly etfIndexRepository: EtfIndexRepository,
+    private readonly etfRepository: EtfRepository,
   ) {}
 
   @UseGuards(JwtGuard)
@@ -23,8 +36,33 @@ export class UserController {
 
   @Get('test')
   async test() {
+    const etf = await this.etfRepository.findOne({
+      select: {
+        code: true,
+      },
+      where: {
+        id: 1,
+      },
+    })
+
+    const stock = await this.stockRepository.findOne({
+      select: {
+        code: true,
+      },
+      where: {
+        id: 1,
+      },
+    })
+
+    // return {
+    //   etf,
+    //   stock,
+    // }
+
+    return this.kisService.getDomesticCandle()
+    // return this.kisService.getDomesticCurrentPrice(stock.code)
     // return this.kisService.getCurrentPrice('TSLA')
-    return this.binanceService.getCurrentPrice()
+    // return this.binanceService.getCurrentPrice()
   }
 
   @UseGuards(JwtGuard)
